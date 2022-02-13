@@ -1,17 +1,13 @@
 #include <stdio.h>
 #include "libs/matrix.h"
+#include "assert.h"
 
 int main() {
-    matrix m = getMemMatrix(2,3);
+    matrix m1 = getMemMatrix(3,3);
 
-    inputMatrix(m);
-    outputMatrix(m);
-    printf("\n");
+    inputMatrix(m1);
 
-    swapRows(m, 0, 1);
-    swapColumns(m, 2, 1);
-
-    outputMatrix(m);
+    printf("%d", isEMatrix(m1));
 
     return 0;
 }

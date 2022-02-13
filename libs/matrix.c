@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include <stdio.h>
+#include "assert.h"
 
 // возвращает размещённую в динамической памяти
 // матрицу размером nRows, nCols
@@ -64,12 +65,47 @@ void swapRows(matrix m, int i1, int i2) {
     m.values[i2] = t;
 }
 
-void swapColumns(matrix m, int j1, int j2){
-    for (int i = 0; i < m.nRows; i++){
+void swapColumns(matrix m, int j1, int j2) {
+    for (int i = 0; i < m.nRows; i++) {
         int t = m.values[i][j1];
         m.values[i][j1] = m.values[i][j2];
         m.values[i][j2] = t;
     }
 }
 
+bool isSquareMatrix(matrix m) {
+    return m.nRows == m.nCols;
+}
+
+// возвращает значение ’истина’, если матрицы
+// m1 и m2 равны, ложь – в противном случае
+bool twoMatricesEqual(matrix m1, matrix m2) {
+    if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
+        return 0;
+
+    for (int i = 0; i < m1.nRows; i++) {
+        for (int j = 0; j < m2.nRows; j++){
+            if (m1.values[i] != m2. values[j])
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+bool isEMatrix(matrix m){
+    if (!isSquareMatrix(m))
+        return 0;
+
+    for (int i = 0; i < m.nRows; i++){
+        for(int j = 0; j< m.nCols; j++){
+            if (i == j && m.values[i][j] != 1)
+                return 0;
+            if (i != j && m.values[i] [j] != 0)
+                return 0;
+        }
+    }
+
+    return 1;
+}
 

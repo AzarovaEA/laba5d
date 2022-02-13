@@ -1,5 +1,6 @@
 #ifndef LABA5D_MATRIX_H
 #define LABA5D_MATRIX_H
+#include "stdbool.h"
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -50,5 +51,26 @@ void swapRows(matrix m, int i1, int i2);
 // обмен колонок с порядковыми
 // номерами j1 и j2 в матрице m
 void swapColumns(matrix m, int j1, int j2);
+
+// возвращает значение ’истина’, если
+// матрица m является квадратной,
+// ложь – в противном случае
+bool isSquareMatrix(matrix m);
+
+// возвращает значение ’истина’, если матрицы
+// m1 и m2 равны, ложь – в противном случае
+bool twoMatricesEqual(matrix m1, matrix m2);
+
+// возвращает значение ’истина’, если матрица
+// m является единичной, ложь – в противном случае
+bool isEMatrix(matrix m);
+
+// возвращает значение ’истина’, если
+//матрица m является симметричной,
+// ложь – в противном случае
+bool isSymmetricMatrix(matrix m);
+
+// транспонирует квадратную матрицу m
+void transposeSquareMatrix(matrix m);
 
 #endif //LABA5D_MATRIX_H
