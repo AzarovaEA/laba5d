@@ -51,6 +51,4 @@ void swapRows(matrix m, int i1, int i2);
 // номерами j1 и j2 в матрице m
 void swapColumns(matrix m, int j1, int j2);
 
-
-
 #endif //LABA5D_MATRIX_H
