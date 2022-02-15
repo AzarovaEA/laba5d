@@ -1,29 +1,28 @@
 #include "libs/matrix.h"
 
-int getMax(int *a, int n) {
-    int max = a[0];
+int getMin(int *a, int n){
+    int min = a[0];
     for (int i = 0; i < n; i++)
-        if (a[i] > max)
-            max = a[i];
+        if (a[i] < min)
+            min = a[i];
 
-    return max;
+    return min;
 }
 
-void sortRowsByMinElement(matrix m) {
-    insertionSortRowsMatrixByRowCriteria(m, getMax);
+void sortColsByMinElement(matrix m){
+    insertionSortColsMatrixByColCriteria(m, getMin);
 }
 
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    1, 1, 3,
-                    7, 0, 5,
-                    4, 5, 2,
+                    3, 5, 2, 4, 3, 3,
+                    2, 5, 1, 8, 2, 7,
+                    6, 1, 4, 4, 8, 3
             },
-            3, 3
+            3, 6
     );
-
-    sortRowsByMinElement(m1);
+    sortColsByMinElement(m1);
 
     outputMatrix(m1);
 
