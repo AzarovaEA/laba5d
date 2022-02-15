@@ -105,6 +105,18 @@ bool isEMatrix(matrix m) {
     return true;
 }
 
+void swapUniversal(const void *a, const void *b, size_t size) {
+    char *pa = a;
+    char *pb = b;
+    for (size_t i = 0; i < size; i++) {
+        char t = *pa;
+        *pa = *pb;
+        *pb = t;
+        pa++;
+        pb++;
+    }
+}
+
 void swap(int *a, int *b) {
     int t = *a;
     *b = *a;
@@ -121,7 +133,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
         int j = i;
         int a = arrayRowsCriteria[i];
         while (j > 0 && arrayRowsCriteria[j - 1] > a) {
-            swap(&arrayRowsCriteria[j - 1], &arrayRowsCriteria[j]);
+            swapUniversal(&arrayRowsCriteria[j - 1], &arrayRowsCriteria[j], sizeof(int));
             swapRows(m, j, j - 1);
             j--;
         }
@@ -171,8 +183,8 @@ bool isSymmetricMatrix(matrix m) {
 
 void transposeSquareMatrix(matrix m) {
     for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++)
-            swap(&m.values[i][j], &m.values[j][i]);
+        for (int j = i + 1; j < m.nCols; j++)
+            swapUniversal(&m.values[i][j], &m.values[j][i], sizeof(int));
     }
 }
 
@@ -246,7 +258,7 @@ void sortRowsByMinElement(matrix m) {
     insertionSortRowsMatrixByRowCriteria(m, getMax);
 }
 
-int getMin(int *a, int n){
+int getMin(int *a, int n) {
     int min = a[0];
     for (int i = 0; i < n; i++)
         if (a[i] < min)
@@ -255,12 +267,12 @@ int getMin(int *a, int n){
     return min;
 }
 
-void sortColsByMinElement(matrix m){
+void sortColsByMinElement(matrix m) {
     insertionSortColsMatrixByColCriteria(m, getMin);
 }
 
 matrix mulMatrices(matrix m1, matrix m2) {
-    matrix c= getMemMatrix(m1.nRows, m1.nCols);
+    matrix c = getMemMatrix(m1.nRows, m1.nCols);
     for (int i = 0; i < m1.nRows; i++) {
         for (int j = 0; j < m2.nCols; j++) {
             c.values[i][j] = 0;
@@ -268,7 +280,7 @@ matrix mulMatrices(matrix m1, matrix m2) {
                 c.values[i][j] += m1.values[i][k] * m2.values[k][j];
         }
     }
-    return (matrix)c;
+    return (matrix) c;
 }
 
 void getSquareOfMatrixIfSymmetric(matrix *m) {
@@ -276,5 +288,12 @@ void getSquareOfMatrixIfSymmetric(matrix *m) {
         *m = mulMatrices(*m, *m);
 }
 
+bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
+    matrix c = mulMatrices(m1, m2);
+    if (isEMatrix(c))
+        return true;
+    else
+        return false;
+}
 
 

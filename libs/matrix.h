@@ -117,4 +117,6 @@ matrix mulMatrices(matrix m1, matrix m2);
 
 void getSquareOfMatrixIfSymmetric(matrix *m);
 
+bool isMutuallyInverseMatrices(matrix m1, matrix m2);
+
 #endif //LABA5D_MATRIX_H

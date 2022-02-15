@@ -1,31 +1,44 @@
 #include "libs/matrix.h"
 
-bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
-    matrix c = mulMatrices(m1, m2);
-    if (isEMatrix(c))
-        return true;
-    else
-        return false;
+bool isUnique(long long *a, int n) {
+    for (int i = 1; i < n; i++)
+        if (a[i] == a[i - 1])
+            return false;
+
+    return true;
+}
+
+long long getSum(int *a, int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += a[i];
+
+    return sum;
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
+    long long arrayOfAmounts[m.nRows];
+
+    for (int i = 0; i < m.nRows; i++)
+        arrayOfAmounts[i] = getSum(m.values[i], m.nCols);
+
+    if (isUnique(arrayOfAmounts, m.nRows))
+        transposeSquareMatrix(m);
 }
 
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    3, -5,
-                    1, -2
+                    1, 1, 2,
+                    3, 4, 3,
+                    3, 6, 0
             },
-            2, 2
+            3, 3
     );
 
-    matrix m2 = createMatrixFromArray(
-            (int[]) {
-                    2, -5,
-                    1, -3
-            },
-            2, 2
-    );
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
 
-    printf("%d", isMutuallyInverseMatrices(m1, m2));
+    outputMatrix(m1);
 
     return 0;
 }
