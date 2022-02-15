@@ -105,4 +105,12 @@ matrix *createArrayOfMatrixFromArray(const int *values,
                                      size_t nMatrices,
                                      size_t nRows, size_t nCols);
 
+int getMin(int *a, int n);
+
+void sortColsByMinElement(matrix m);
+
+int getMax(int *a, int n);
+
+void sortRowsByMinElement(matrix m);
+
 #endif //LABA5D_MATRIX_H
