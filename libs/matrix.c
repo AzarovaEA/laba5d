@@ -1,7 +1,5 @@
 #include "matrix.h"
 
-// возвращает размещённую в динамической памяти
-// матрицу размером nRows, nCols
 matrix getMemMatrix(int nRows, int nCols) {
     int **values = (int **) malloc(sizeof(int *) * nRows);
     for (int i = 0; i < nRows; i++)
