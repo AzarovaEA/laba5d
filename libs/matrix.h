@@ -113,4 +113,8 @@ int getMax(int *a, int n);
 
 void sortRowsByMinElement(matrix m);
 
+matrix mulMatrices(matrix m1, matrix m2);
+
+void getSquareOfMatrixIfSymmetric(matrix *m);
+
 #endif //LABA5D_MATRIX_H

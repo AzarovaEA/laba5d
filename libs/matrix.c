@@ -258,3 +258,23 @@ int getMin(int *a, int n){
 void sortColsByMinElement(matrix m){
     insertionSortColsMatrixByColCriteria(m, getMin);
 }
+
+matrix mulMatrices(matrix m1, matrix m2) {
+    matrix c= getMemMatrix(m1.nRows, m1.nCols);
+    for (int i = 0; i < m1.nRows; i++) {
+        for (int j = 0; j < m2.nCols; j++) {
+            c.values[i][j] = 0;
+            for (int k = 0; k < m1.nCols; k++)
+                c.values[i][j] += m1.values[i][k] * m2.values[k][j];
+        }
+    }
+    return (matrix)c;
+}
+
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    if (isSymmetricMatrix(*m))
+        *m = mulMatrices(*m, *m);
+}
+
+
+
