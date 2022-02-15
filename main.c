@@ -1,22 +1,29 @@
 #include "libs/matrix.h"
 
-void taskNumber1(matrix m){
-    position minIndex = getMinValuePos(m);
-    position maxIndex = getMaxValuePos(m);
-    swapRows(m, minIndex.rowIndex, maxIndex.rowIndex);
+int getMax(int *a, int n) {
+    int max = a[0];
+    for (int i = 0; i < n; i++)
+        if (a[i] > max)
+            max = a[i];
+
+    return max;
+}
+
+void sortRowsByMinElement(matrix m) {
+    insertionSortRowsMatrixByRowCriteria(m, getMax);
 }
 
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    1, 9, 3,
-                    9, 0, 5,
-                    3, 5, 3,
+                    1, 1, 3,
+                    7, 0, 5,
+                    4, 5, 2,
             },
             3, 3
     );
 
-    taskNumber1(m1);
+    sortRowsByMinElement(m1);
 
     outputMatrix(m1);
 

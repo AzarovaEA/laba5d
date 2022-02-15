@@ -117,11 +117,16 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
     for (int i = 0; i < m.nRows; i++)
         arrayRowsCriteria[i] = criteria(m.values[i], m.nCols);
 
-    for (int i = 1; i < m.nRows; i++)
-        for (int j = i; j > 0 && arrayRowsCriteria[j - 1] > arrayRowsCriteria[j]; j--) {
+    for (int i = 1; i < m.nRows; i++) {
+        int j = i;
+        int a = arrayRowsCriteria[i];
+        while (j > 0 && arrayRowsCriteria[j - 1] > a) {
             swap(&arrayRowsCriteria[j - 1], &arrayRowsCriteria[j]);
             swapRows(m, j, j - 1);
+            j--;
         }
+        arrayRowsCriteria[j] = a;
+    }
 }
 
 void insertionSortColsMatrixByColCriteria(matrix m,
@@ -134,11 +139,16 @@ void insertionSortColsMatrixByColCriteria(matrix m,
         arrayColsCriteria[j] = criteria(arrayColsElement, m.nRows);
     }
 
-    for (int i = 1; i < m.nCols; i++)
-        for (int j = 1; j > 0 && arrayColsCriteria[j - 1] > arrayColsCriteria[j]; j--) {
-            swap(&arrayColsCriteria[j - 1], &arrayColsCriteria[j]);
+    for (int i = 1; i < m.nCols; i++) {
+        int j = i;
+        int a = arrayColsCriteria[i];
+        while (j > 0 && arrayColsCriteria[j - 1] > a) {
+            arrayColsCriteria[j] = arrayColsCriteria[j - 1];
             swapColumns(m, j, j - 1);
+            j--;
         }
+        arrayColsCriteria[j] = a;
+    }
 }
 
 bool isSymmetricMatrix(matrix m) {
