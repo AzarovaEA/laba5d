@@ -16,11 +16,11 @@ void sortColsByMinElement(matrix m){
 int main() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    3, 5, 2, 4, 3, 3,
-                    2, 5, 1, 8, 2, 7,
-                    6, 1, 4, 4, 8, 3
+                    3, 5, 2, 4, 3,
+                    2, 5, 1, 8, 2,
+                    6, 1, 4, 4, 8
             },
-            3, 6
+            3, 5
     );
     sortColsByMinElement(m1);
 
