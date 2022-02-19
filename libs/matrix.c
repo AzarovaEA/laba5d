@@ -73,18 +73,13 @@ bool isSquareMatrix(matrix m) {
     return m.nRows == m.nCols;
 }
 
-// возвращает значение ’истина’, если матрицы
-// m1 и m2 равны, ложь – в противном случае
 bool twoMatricesEqual(matrix m1, matrix m2) {
     if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
         return false;
 
-    for (int i = 0; i < m1.nRows; i++) {
-        for (int j = 0; j < m2.nRows; j++) {
-            if (m1.values[i] != m2.values[j])
-                return false;
-        }
-    }
+    for (int i = 0; i < m1.nRows; i++)
+        if (memicmp(m1.values[i], m2.values[i], sizeof(int) * m1.nCols))
+            return false;
 
     return true;
 }
@@ -105,7 +100,7 @@ bool isEMatrix(matrix m) {
     return true;
 }
 
-void swapUniversal(const void *a, const void *b, size_t size) {
+void swapUniversal(void *a, void *b, size_t size) {
     char *pa = a;
     char *pb = b;
     for (size_t i = 0; i < size; i++) {
@@ -141,7 +136,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
     }
 }
 
-void insertionSortColsMatrixByColCriteria(matrix m,
+void selectionSortColsMatrixByColCriteria(matrix m,
                                           int (*criteria)(int *, int)) {
     int arrayColsCriteria[m.nCols];
     for (int j = 0; j < m.nCols; j++) {
@@ -171,10 +166,9 @@ bool isSymmetricMatrix(matrix m) {
         return true;
 
     for (int i = 0; i < m.nRows; i++) {
-        for (int j = 0; j < m.nCols; j++) {
-            if (i != j)
-                if (m.values[i][j] != m.values[j][i])
-                    return false;
+        for (int j = i + 1; j < m.nCols; j++) {
+            if (m.values[i][j] != m.values[j][i])
+                return false;
         }
     }
 
@@ -268,7 +262,7 @@ int getMin(int *a, int n) {
 }
 
 void sortColsByMinElement(matrix m) {
-    insertionSortColsMatrixByColCriteria(m, getMin);
+    selectionSortColsMatrixByColCriteria(m, getMin);
 }
 
 matrix mulMatrices(matrix m1, matrix m2) {
@@ -290,10 +284,41 @@ void getSquareOfMatrixIfSymmetric(matrix *m) {
 
 bool isMutuallyInverseMatrices(matrix m1, matrix m2) {
     matrix c = mulMatrices(m1, m2);
-    if (isEMatrix(c))
+    int a = isEMatrix(c);
+    freeMemMatrix(c);
+    if (a)
         return true;
     else
         return false;
 }
 
+bool isUnique(long long *a, int n) {
+    for (int i = 1; i < n; i++)
+        if (a[i] == a[i - 1])
+            return false;
+
+    return true;
+}
+
+long long getSum(int *a, int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += a[i];
+
+    return sum;
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
+    long long arrayOfAmounts[m.nRows];
+
+    for (int i = 0; i < m.nRows; i++)
+        arrayOfAmounts[i] = getSum(m.values[i], m.nCols);
+
+    if (isUnique(arrayOfAmounts, m.nRows))
+        transposeSquareMatrix(m);
+}
+
+int max(int a, int b) {
+    return a > b ? a : b;
+}
 

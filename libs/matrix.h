@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <assert.h>
+#include <memory.h>
+#include <malloc.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -105,18 +107,43 @@ matrix *createArrayOfMatrixFromArray(const int *values,
                                      size_t nMatrices,
                                      size_t nRows, size_t nCols);
 
+// Возвращает минимальный элемент массива а, размера n
 int getMin(int *a, int n);
 
+// Упорядочивает столбцы матрицы по неубыванию
+// минимальных элементов столбцов
 void sortColsByMinElement(matrix m);
 
+// Возвращает максимальный элемент массива а, размера n
 int getMax(int *a, int n);
 
+// Упорядочивает строки матрицы m по неубыванию
+// наибольших элементов строк
 void sortRowsByMinElement(matrix m);
 
+// Произведение двух матриц m1 и m2
 matrix mulMatrices(matrix m1, matrix m2);
 
+// Если данная квадратная матрица m симметрична,
+// то заменяет m ее квадратом
 void getSquareOfMatrixIfSymmetric(matrix *m);
 
+// Если две матрицы m1 и m2 взаимно обратны,
+// то вернуть 'истина', иначе - 'ложь'
 bool isMutuallyInverseMatrices(matrix m1, matrix m2);
+
+// Если все элементы массива a, размера n различны,
+// то вернуть 'истина', иначе - 'ложь'
+bool isUnique(long long *a, int n);
+
+// Возвращает сумму элементов массива a, размера n
+long long getSum(int *a, int n);
+
+// Транспонирует матрицу, если среди сумм элементов
+// строк матрицы m нет равных
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
+
+// возвращает максимальное из двух чисел a и b
+int max(int a, int b);
 
 #endif //LABA5D_MATRIX_H
