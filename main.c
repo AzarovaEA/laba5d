@@ -427,6 +427,39 @@ void test_taskNumber5_two() {
     assert(twoMatricesEqual(m1, m2) == 1);
 }
 
+void test_taskNumber6() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, -5,
+                    1, -2
+            },
+            2, 2
+    );
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    2, -5,
+                    1, -3
+            },
+            2, 2
+    );
+
+    assert(isMutuallyInverseMatrices(m1, m2) == 1);
+}
+
+void test_taskNumber7() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 5, 4,
+                    1, 3, 6, 3,
+                    3, 2, 1, 2
+            },
+            3, 4
+    );
+
+    assert(findSumOfMaxesOfPseudoDiagonal(m1) == 20);
+}
+
 void test_tasks() {
     test_taskNumber1();
     test_taskNumber2();
@@ -435,6 +468,8 @@ void test_tasks() {
     test_taskNumber4_two_NoSymmetric();
     test_taskNumber5_one();
     test_taskNumber5_two();
+    test_taskNumber6();
+    test_taskNumber7();
 }
 
 void test() {

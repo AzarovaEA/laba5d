@@ -146,4 +146,8 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
 // возвращает максимальное из двух чисел a и b
 int max(int a, int b);
 
+// Возвращает сумму максимальных элементов
+// всех псевдодиагоналей матрицы m
+long long findSumOfMaxesOfPseudoDiagonal(matrix m);
+
 #endif //LABA5D_MATRIX_H

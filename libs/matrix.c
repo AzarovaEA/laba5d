@@ -318,7 +318,18 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
         transposeSquareMatrix(m);
 }
 
-int max(int a, int b) {
-    return a > b ? a : b;
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    int sizeOfPseudoDiagonal = m.nCols + m.nRows - 2;
+    int *arrayMaxesOfPseudoDiagonal = (int *) calloc(sizeOfPseudoDiagonal, sizeof(int));
+
+    for (int i = 0; i < m.nRows; i++) {
+        for (int j = 0; j < m.nCols; j++) {
+            int k = j + 2 - i;
+            if (i != j && m.values[i][j] > arrayMaxesOfPseudoDiagonal[k])
+                arrayMaxesOfPseudoDiagonal[k] = m.values[i][j];
+        }
+    }
+
+    return getSum(arrayMaxesOfPseudoDiagonal, sizeOfPseudoDiagonal + 1);
 }
 
