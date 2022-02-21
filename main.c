@@ -21,6 +21,9 @@ void test_swapRows_twoMatricesEqual_matrix1And2AfterReplacingRows1() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_swapColumns_twoMatricesEqual_matrix1And2AfterReplacingColumns1() {
@@ -44,6 +47,9 @@ void test_swapColumns_twoMatricesEqual_matrix1And2AfterReplacingColumns1() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_isSquareMatrix() {
@@ -57,6 +63,8 @@ void test_isSquareMatrix() {
     );
 
     assert(isSquareMatrix(m1) == 1);
+
+    freeMemMatrix(m1);
 }
 
 void test_is_No_SquareMatrix() {
@@ -69,6 +77,8 @@ void test_is_No_SquareMatrix() {
     );
 
     assert(!isSquareMatrix(m1) == 1);
+
+    freeMemMatrix(m1);
 }
 
 void test_isEMatrix() {
@@ -82,6 +92,8 @@ void test_isEMatrix() {
     );
 
     assert(isEMatrix(m1) == 1);
+
+    freeMemMatrix(m1);
 }
 
 void test_is_No_EMatrix() {
@@ -95,6 +107,8 @@ void test_is_No_EMatrix() {
     );
 
     assert(!isEMatrix(m1) == 1);
+
+    freeMemMatrix(m1);
 }
 
 void test_insertionSortRowsMatrixByRowCriteria_getMax() {
@@ -118,6 +132,9 @@ void test_insertionSortRowsMatrixByRowCriteria_getMax() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_isSymmetricMatrix() {
@@ -131,6 +148,8 @@ void test_isSymmetricMatrix() {
     );
 
     assert(isSymmetricMatrix(m1) == 1);
+
+    freeMemMatrix(m1);
 }
 
 void test_isSymmetricMatrix_NoSquareMatrix() {
@@ -143,6 +162,8 @@ void test_isSymmetricMatrix_NoSquareMatrix() {
     );
 
     assert(isSymmetricMatrix(m1) == 0);
+
+    freeMemMatrix(m1);
 }
 
 void test_is_No_SymmetricMatrix() {
@@ -156,6 +177,8 @@ void test_is_No_SymmetricMatrix() {
     );
 
     assert(isSymmetricMatrix(m1) == 0);
+
+    freeMemMatrix(m1);
 }
 
 void test_transposeSquareMatrix() {
@@ -180,6 +203,9 @@ void test_transposeSquareMatrix() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_transposeSquareMatrix_false() {
@@ -204,6 +230,9 @@ void test_transposeSquareMatrix_false() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 0);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_getMinValuePos_EqualToi2j1() {
@@ -224,6 +253,30 @@ void test_getMinValuePos_EqualToi2j1() {
 
     assert(a.rowIndex == b.rowIndex);
     assert(a.colIndex == b.colIndex);
+
+    freeMemMatrix(m1);
+}
+
+void test_getMinValuePos_EqualToi0j0() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+
+    position a;
+    a.rowIndex = 0;
+    a.colIndex = 0;
+
+    position b = getMinValuePos(m1);
+
+    assert(a.rowIndex == b.rowIndex);
+    assert(a.colIndex == b.colIndex);
+
+    freeMemMatrix(m1);
 }
 
 void test_getMaxValuePos_EqualToi0j2() {
@@ -244,6 +297,8 @@ void test_getMaxValuePos_EqualToi0j2() {
 
     assert(a.rowIndex == b.rowIndex);
     assert(a.colIndex == b.colIndex);
+
+    freeMemMatrix(m1);
 }
 
 void test_functionsForMatrices() {
@@ -254,6 +309,7 @@ void test_functionsForMatrices() {
     test_transposeSquareMatrix_false();
     test_getMinValuePos_EqualToi2j1();
     test_getMaxValuePos_EqualToi0j2();
+    test_getMinValuePos_EqualToi0j0();
 }
 
 void test_predicate_FunctionsForMatrices() {
@@ -290,6 +346,9 @@ void test_taskNumber1() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber2() {
@@ -314,6 +373,8 @@ void test_taskNumber2() {
     );
 
     assert(twoMatricesEqual(m1, m2));
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber3() {
@@ -338,6 +399,9 @@ void test_taskNumber3() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber4_one() {
@@ -362,6 +426,9 @@ void test_taskNumber4_one() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber4_two_NoSymmetric() {
@@ -377,6 +444,8 @@ void test_taskNumber4_two_NoSymmetric() {
     getSquareOfMatrixIfSymmetric(&m1);
 
     assert(isSymmetricMatrix(m1) == 0);
+
+    freeMemMatrix(m1);
 }
 
 void test_taskNumber5_one() {
@@ -401,6 +470,9 @@ void test_taskNumber5_one() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber5_two() {
@@ -425,6 +497,9 @@ void test_taskNumber5_two() {
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber6() {
@@ -445,6 +520,9 @@ void test_taskNumber6() {
     );
 
     assert(isMutuallyInverseMatrices(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
 }
 
 void test_taskNumber7() {
@@ -458,6 +536,8 @@ void test_taskNumber7() {
     );
 
     assert(findSumOfMaxesOfPseudoDiagonal(m1) == 20);
+
+    freeMemMatrix(m1);
 }
 
 void test_taskNumber8_MaxInTheMiddle() {
@@ -471,6 +551,8 @@ void test_taskNumber8_MaxInTheMiddle() {
     );
 
     assert(getMinInArea(m1) == 5);
+
+    freeMemMatrix(m1);
 }
 
 void test_taskNumber8_MaxOnTheLeftEdge() {
@@ -484,6 +566,8 @@ void test_taskNumber8_MaxOnTheLeftEdge() {
     );
 
     assert(getMinInArea(m1) == 3);
+
+    freeMemMatrix(m1);
 }
 
 
@@ -498,6 +582,23 @@ void test_taskNumber8_MaxInTheFirstRow() {
     );
 
     assert(getMinInArea(m1) == 12);
+
+    freeMemMatrix(m1);
+}
+
+void test_tasks_1_8() {
+    test_taskNumber1();
+    test_taskNumber2();
+    test_taskNumber3();
+    test_taskNumber4_one();
+    test_taskNumber4_two_NoSymmetric();
+    test_taskNumber5_one();
+    test_taskNumber5_two();
+    test_taskNumber6();
+    test_taskNumber7();
+    test_taskNumber8_MaxInTheMiddle();
+    test_taskNumber8_MaxOnTheLeftEdge();
+    test_taskNumber8_MaxInTheFirstRow();
 }
 
 int cmp_long_long(const void *a, const void *b) {
@@ -535,7 +636,7 @@ int countEqClassesByRowsSum(matrix m) {
     return countNUnique(arrayEqualClasses, m.nRows);
 }
 
-void test_taskNumber9() {
+void test_taskNumber10() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
                     7, 1,
@@ -549,6 +650,8 @@ void test_taskNumber9() {
     );
 
     assert(countEqClassesByRowsSum(m1) == 3);
+
+    freeMemMatrix(m1);
 }
 
 int getNSpecialElement(matrix m) {
@@ -581,29 +684,148 @@ void test_taskNumber11() {
     );
 
     assert(getNSpecialElement(m1) == 2);
+
+    freeMemMatrix(m1);
 }
 
-void test_tasks() {
-    test_taskNumber1();
-    test_taskNumber2();
-    test_taskNumber3();
-    test_taskNumber4_one();
-    test_taskNumber4_two_NoSymmetric();
-    test_taskNumber5_one();
-    test_taskNumber5_two();
-    test_taskNumber6();
-    test_taskNumber7();
-    test_taskNumber8_MaxInTheMiddle();
-    test_taskNumber8_MaxOnTheLeftEdge();
-    test_taskNumber8_MaxInTheFirstRow();
-    test_taskNumber9();
+// Заменяет предпоследнюю строку матрицы m размера n первым из
+// столбцов, в котором находится минимальный элемент матрицы m
+void swapPenultimateRow(matrix m, int n) {
+    position min = getMinValuePos(m);
+    int penultimateLine[m.nCols];
+
+    for (int i = 0; i < m.nRows; i++)
+        penultimateLine[i] = m.values[i][min.colIndex];
+
+    for (int j = 0, indexArray = 0; j < m.nCols, indexArray < m.nCols; j++, indexArray++) {
+        m.values[n - 2][j] = penultimateLine[indexArray];
+    }
+}
+
+void test_taskNumber12_severalIdenticalMinimum() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+
+    swapPenultimateRow(m1, 3);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    1, 4, 7,
+                    7, 8, 1
+            },
+            3, 3
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
+}
+
+void test_taskNumber12_minInTheThirdColumn() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 1, 4,
+                    4, 5, 6, 5,
+                    7, 8, 0, 7,
+                    9, 3, 5, 1
+            },
+            4, 4
+    );
+
+    swapPenultimateRow(m1, 4);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 1, 4,
+                    4, 5, 6, 5,
+                    1, 6, 0, 5,
+                    9, 3, 5, 1
+            },
+            4, 4
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
+}
+
+void test_taskNumber12_minInTheLastColumn() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 6, 4,
+                    4, 5, 6, 5,
+                    7, 8, 2, 0,
+                    9, 3, 1, 1
+            },
+            4, 4
+    );
+
+    swapPenultimateRow(m1, 4);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 6, 4,
+                    4, 5, 6, 5,
+                    4, 5, 0, 1,
+                    9, 3, 1, 1
+            },
+            4, 4
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
+}
+
+void test_taskNumber12_size2x2() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2,
+                    1, 1
+            },
+            2, 2
+    );
+
+    swapPenultimateRow(m1, 2);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 1,
+                    1, 1
+            },
+            2, 2
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
+}
+
+void test_tasks_9_15() {
+    test_taskNumber10();
     test_taskNumber11();
+    test_taskNumber12_severalIdenticalMinimum();
+    test_taskNumber12_minInTheThirdColumn();
+    test_taskNumber12_minInTheLastColumn();
+    test_taskNumber12_size2x2();
 }
 
 void test() {
     test_functionsForMatrices();
     test_predicate_FunctionsForMatrices();
-    test_tasks();
+    test_tasks_1_8();
+    test_tasks_9_15();
 }
 
 int main() {
