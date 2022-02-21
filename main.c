@@ -460,6 +460,46 @@ void test_taskNumber7() {
     assert(findSumOfMaxesOfPseudoDiagonal(m1) == 20);
 }
 
+void test_taskNumber8_MaxInTheMiddle() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, 7, 5, 6,
+                    3, 11, 8, 9,
+                    4, 1, 12, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 5);
+}
+
+void test_taskNumber8_MaxOnTheLeftEdge() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, 7, 5, 6,
+                    3, 11, 8, 9,
+                    12, 1, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 3);
+}
+
+
+void test_taskNumber8_MaxInTheFirstRow() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 7, 12, 6,
+                    3, 11, 8, 9,
+                    2, 1, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 12);
+}
+
 void test_tasks() {
     test_taskNumber1();
     test_taskNumber2();
@@ -470,6 +510,9 @@ void test_tasks() {
     test_taskNumber5_two();
     test_taskNumber6();
     test_taskNumber7();
+    test_taskNumber8_MaxInTheMiddle();
+    test_taskNumber8_MaxOnTheLeftEdge();
+    test_taskNumber8_MaxInTheFirstRow();
 }
 
 void test() {

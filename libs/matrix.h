@@ -150,4 +150,9 @@ int max(int a, int b);
 // всех псевдодиагоналей матрицы m
 long long findSumOfMaxesOfPseudoDiagonal(matrix m);
 
+// Возвращает минимальный элемент матрицы m, в области от максимального
+// элемента с расширением границ при подъеме на один ряд,
+// если максимальный элемент в верхнем ряду - вернуть максимум
+int getMinInArea(matrix m);
+
 #endif //LABA5D_MATRIX_H
