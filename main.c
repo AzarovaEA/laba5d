@@ -551,6 +551,38 @@ void test_taskNumber9() {
     assert(countEqClassesByRowsSum(m1) == 3);
 }
 
+int getNSpecialElement(matrix m) {
+    int numberSpecial = 0;
+    for (int j = 0; j < m.nCols; j++) {
+        int specialElement = m.values[0][j];
+        int sumInTheColumn = 0;
+        for (int i = 1; i < m.nRows; i++) {
+            if (m.values[i][j] > specialElement) {
+                sumInTheColumn += specialElement;
+                specialElement = m.values[i][j];
+            } else
+                sumInTheColumn += m.values[i][j];
+        }
+        if (specialElement > sumInTheColumn)
+            numberSpecial++;
+    }
+
+    return numberSpecial;
+}
+
+void test_taskNumber11() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 6, 7,
+                    12, 2, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getNSpecialElement(m1) == 2);
+}
+
 void test_tasks() {
     test_taskNumber1();
     test_taskNumber2();
@@ -565,6 +597,7 @@ void test_tasks() {
     test_taskNumber8_MaxOnTheLeftEdge();
     test_taskNumber8_MaxInTheFirstRow();
     test_taskNumber9();
+    test_taskNumber11();
 }
 
 void test() {

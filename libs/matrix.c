@@ -330,7 +330,10 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
         }
     }
 
-    return getSum(arrayMaxesOfPseudoDiagonal, sizeOfPseudoDiagonal + 1);
+    long long sum = getSum(arrayMaxesOfPseudoDiagonal, sizeOfPseudoDiagonal + 1);
+    free(arrayMaxesOfPseudoDiagonal);
+
+    return sum;
 }
 
 int getMinInArea(matrix m) {
@@ -353,4 +356,6 @@ int getMinInArea(matrix m) {
 
     return minElement;
 }
+
+
 
