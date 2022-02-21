@@ -500,6 +500,57 @@ void test_taskNumber8_MaxInTheFirstRow() {
     assert(getMinInArea(m1) == 12);
 }
 
+int cmp_long_long(const void *a, const void *b) {
+    long long arg1 = *(const long long *) a;
+    long long arg2 = *(const long long *) b;
+
+    if (arg1 < arg2) return -1;
+    if (arg1 > arg2) return 1;
+
+    return 0;
+}
+
+// Возвращает количество уникальных элементов
+// в матрице m, размера n
+int countNUnique(long long *a, int n) {
+    qsort(a, n, sizeof(long long), cmp_long_long);
+
+    int countUnique = 1;
+    for (int i = 1; i < n; i++)
+        if (a[i] != a[i - 1])
+            countUnique++;
+
+    return countUnique;
+}
+
+// Возвращает количество классов эквивалентных строк
+// матрицы m (Строки считать эквивалентными,
+// если равны суммы их элементов)
+int countEqClassesByRowsSum(matrix m) {
+    long long arrayEqualClasses[m.nRows];
+
+    for (int i = 0; i < m.nRows; i++)
+        arrayEqualClasses[i] = getSum(m.values[i], m.nCols);
+
+    return countNUnique(arrayEqualClasses, m.nRows);
+}
+
+void test_taskNumber9() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    2, 7,
+                    5, 4,
+                    4, 3,
+                    1, 6,
+                    8, 0
+            },
+            6, 2
+    );
+
+    assert(countEqClassesByRowsSum(m1) == 3);
+}
+
 void test_tasks() {
     test_taskNumber1();
     test_taskNumber2();
@@ -513,6 +564,7 @@ void test_tasks() {
     test_taskNumber8_MaxInTheMiddle();
     test_taskNumber8_MaxOnTheLeftEdge();
     test_taskNumber8_MaxInTheFirstRow();
+    test_taskNumber9();
 }
 
 void test() {

@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <memory.h>
 #include <malloc.h>
+#include <stdlib.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
