@@ -812,6 +812,126 @@ void test_taskNumber12_size2x2() {
     freeMemMatrix(m2);
 }
 
+bool isNonDescendingSorted(int *a, int n) {
+    for (int i = 1; i < n; i++)
+        if (a[i - 1] > a[i])
+            return false;
+    return true;
+}
+
+bool hasAllNonDescendingRows(matrix m) {
+    for (int i = 0; i < m.nRows; i++)
+        if (isNonDescendingSorted(m.values[i], m.nCols) == 0)
+            return false;
+    return true;
+}
+
+int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
+    int countNonDescendingRows = 0;
+    for (int i = 0; i < nMatrix; i++) {
+        if (hasAllNonDescendingRows(ms[i]) == 1)
+            countNonDescendingRows++;
+    }
+    return countNonDescendingRows;
+}
+
+void test_taskNumber13_countOfNonDescIs2() {
+    matrix *m = createArrayOfMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    1, 1,
+
+                    1, 6,
+                    2, 2,
+
+                    5, 4,
+                    2, 3,
+
+                    1, 3,
+                    7, 9,
+            },
+            4,
+            2, 2
+    );
+
+    assert(countNonDescendingRowsMatrices(m, 4) == 2);
+}
+
+
+void test_taskNumber13_countOfNonDescIs3() {
+    matrix *m = createArrayOfMatrixFromArray(
+            (int[]) {
+                    1, 1, 5,
+                    1, 1, 8,
+                    4, 6, 7,
+
+                    1, 6, 8,
+                    2, 2, 4,
+                    2, 5, 7,
+
+                    5, 4, 2,
+                    2, 3, 6,
+                    3, 6, 8,
+
+                    1, 3, 3,
+                    7, 9, 9,
+                    2, 4, 5
+            },
+            4,
+            3, 3
+    );
+
+    assert(countNonDescendingRowsMatrices(m, 4) == 3);
+}
+
+void test_taskNumber13_countOfNonDescIs1() {
+    matrix *m = createArrayOfMatrixFromArray(
+            (int[]) {
+                    1, 1, 1,
+                    1, 1, 1,
+                    1, 1, 1,
+
+                    7, 6, 8,
+                    2, 2, 4,
+                    2, 5, 7,
+
+                    5, 4, 2,
+                    2, 3, 6,
+                    3, 6, 8,
+
+                    9, 3, 3,
+                    7, 9, 9,
+                    2, 4, 5
+            },
+            4,
+            3, 3
+    );
+
+    assert(countNonDescendingRowsMatrices(m, 4) == 1);
+}
+
+void test_taskNumber13_theAreNoNonDescRowsMatrices() {
+    matrix *m = createArrayOfMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    1, 1,
+
+                    1, 6,
+                    4, 2,
+
+                    5, 4,
+                    2, 3,
+
+                    5, 3,
+                    7, 9,
+            },
+            4,
+            2, 2
+    );
+
+    assert(countNonDescendingRowsMatrices(m, 4) == 0);
+}
+
 void test_tasks_9_15() {
     test_taskNumber10();
     test_taskNumber11();
@@ -819,6 +939,10 @@ void test_tasks_9_15() {
     test_taskNumber12_minInTheThirdColumn();
     test_taskNumber12_minInTheLastColumn();
     test_taskNumber12_size2x2();
+    test_taskNumber13_countOfNonDescIs2();
+    test_taskNumber13_countOfNonDescIs3();
+    test_taskNumber13_theAreNoNonDescRowsMatrices();
+    test_taskNumber13_countOfNonDescIs1();
 }
 
 void test() {
