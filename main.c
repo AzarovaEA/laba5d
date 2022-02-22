@@ -114,21 +114,50 @@ void test_is_No_EMatrix() {
 void test_insertionSortRowsMatrixByRowCriteria_getMax() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    3, 5, 4, 3, 6,
-                    7, 5, 5, 5, 8,
-                    5, 3, 4, 3, 5
+                    3, 3, 4, 5,
+                    3, 1, 2, 3,
+                    3, 4, 5, 6
             },
-            3, 5
+            3, 4
     );
-    sortRowsByMinElement(m1);
+
+    insertionSortRowsMatrixByRowCriteria(m1, getMin);
 
     matrix m2 = createMatrixFromArray(
             (int[]) {
-                    5, 3, 4, 3, 5,
-                    3, 5, 4, 3, 6,
-                    7, 5, 5, 5, 8
+                    3, 1, 2, 3,
+                    3, 3, 4, 5,
+                    3, 4, 5, 6
             },
-            3, 5
+            3, 4
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemMatrix(m1);
+    freeMemMatrix(m2);
+}
+
+void test_insertionSortColsMatrixByColCriteria_getMin() {
+
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 3, 3,
+                    3, 1, 2,
+                    5, 5, 5
+            },
+            3, 3
+    );
+
+    insertionSortColsMatrixByColCriteria(m1, getMin);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 3, 3,
+                    1, 2, 3,
+                    5, 5, 5
+            },
+            3, 3
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
@@ -315,10 +344,11 @@ void test_functionsForMatrices() {
     test_swapRows_twoMatricesEqual_matrix1And2AfterReplacingRows1();
     test_swapColumns_twoMatricesEqual_matrix1And2AfterReplacingColumns1();
     test_insertionSortRowsMatrixByRowCriteria_getMax();
+    test_insertionSortColsMatrixByColCriteria_getMin();
     test_transposeSquareMatrix();
     test_transposeSquareMatrix_false();
-    test_getMinValuePos_EqualToi2j1();
     test_getMaxValuePos_EqualToi0j2();
+    test_getMinValuePos_EqualToi2j1();
     test_getMinValuePos_EqualToi0j0();
 }
 

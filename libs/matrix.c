@@ -130,7 +130,7 @@ void insertionSortRowsMatrixByRowCriteria(matrix m,
     }
 }
 
-void selectionSortColsMatrixByColCriteria(matrix m,
+void insertionSortColsMatrixByColCriteria(matrix m,
                                           int (*criteria)(int *, int)) {
     int arrayColsCriteria[m.nCols];
     for (int j = 0; j < m.nCols; j++) {
@@ -256,7 +256,7 @@ int getMin(int *a, int n) {
 }
 
 void sortColsByMinElement(matrix m) {
-    selectionSortColsMatrixByColCriteria(m, getMin);
+    insertionSortColsMatrixByColCriteria(m, getMin);
 }
 
 matrix mulMatrices(matrix m1, matrix m2) {
