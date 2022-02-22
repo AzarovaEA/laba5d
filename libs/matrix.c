@@ -319,18 +319,21 @@ void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
 }
 
 long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
-    int sizeOfPseudoDiagonal = m.nCols + m.nRows - 2;
-    int *arrayMaxesOfPseudoDiagonal = (int *) calloc(sizeOfPseudoDiagonal, sizeof(int));
+    int sizeOfPseudoDiagonal = m.nCols + m.nRows - 1;
+    int *arrayMaxesOfPseudoDiagonal = (int *) malloc(sizeOfPseudoDiagonal * sizeof(int));
+    for (int i = 0; i < sizeOfPseudoDiagonal; i++)
+        arrayMaxesOfPseudoDiagonal[i] = INT_MIN;
 
-    for (int i = 0; i < m.nRows; i++) {
+    for (int i = 0; i < m.nRows; i++)
         for (int j = 0; j < m.nCols; j++) {
-            int k = j + 2 - i;
-            if (i != j && m.values[i][j] > arrayMaxesOfPseudoDiagonal[k])
+            int k = j + m.nRows - 1 - i;
+            if (m.values[i][j] > arrayMaxesOfPseudoDiagonal[k])
                 arrayMaxesOfPseudoDiagonal[k] = m.values[i][j];
         }
-    }
 
-    long long sum = getSum(arrayMaxesOfPseudoDiagonal, sizeOfPseudoDiagonal + 1);
+    arrayMaxesOfPseudoDiagonal[m.nRows - 1] = 0;
+
+    long long sum = getSum(arrayMaxesOfPseudoDiagonal, sizeOfPseudoDiagonal);
     free(arrayMaxesOfPseudoDiagonal);
 
     return sum;

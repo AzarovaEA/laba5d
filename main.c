@@ -525,7 +525,7 @@ void test_taskNumber6() {
     freeMemMatrix(m2);
 }
 
-void test_taskNumber7() {
+void test_taskNumber7_one() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
                     3, 2, 5, 4,
@@ -536,6 +536,21 @@ void test_taskNumber7() {
     );
 
     assert(findSumOfMaxesOfPseudoDiagonal(m1) == 20);
+
+    freeMemMatrix(m1);
+}
+
+void test_taskNumber7_two() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, 2, 10, 10,
+                    10, 3, 10, 3,
+                    10, 2, 10, 2
+            },
+            3, 4
+    );
+
+    assert(findSumOfMaxesOfPseudoDiagonal(m1) == 50);
 
     freeMemMatrix(m1);
 }
@@ -595,7 +610,8 @@ void test_tasks_1_8() {
     test_taskNumber5_one();
     test_taskNumber5_two();
     test_taskNumber6();
-    test_taskNumber7();
+    test_taskNumber7_one();
+    test_taskNumber7_two();
     test_taskNumber8_MaxInTheMiddle();
     test_taskNumber8_MaxOnTheLeftEdge();
     test_taskNumber8_MaxInTheFirstRow();
@@ -697,7 +713,7 @@ void swapPenultimateRow(matrix m, int n) {
     for (int i = 0; i < m.nRows; i++)
         penultimateLine[i] = m.values[i][min.colIndex];
 
-    for (int j = 0, indexArray = 0; j < m.nCols, indexArray < m.nCols; j++, indexArray++) {
+    for (int j = 0, indexArray = 0; indexArray < m.nCols; j++, indexArray++) {
         m.values[n - 2][j] = penultimateLine[indexArray];
     }
 }
@@ -812,13 +828,17 @@ void test_taskNumber12_size2x2() {
     freeMemMatrix(m2);
 }
 
-bool isNonDescendingSorted(int *a, int n) {
+// Возвращает 'истина', если массив a размера n отсортирован
+// по не убыванию, в обратном случае вернуть 'ложь'
+bool isNonDescendingSorted(const int *a, int n) {
     for (int i = 1; i < n; i++)
         if (a[i - 1] > a[i])
             return false;
     return true;
 }
 
+// Возвращает 'истина', если в матрице m ряды отсортированы
+// по не убыванию, в обратном случае вернуть 'ложь'
 bool hasAllNonDescendingRows(matrix m) {
     for (int i = 0; i < m.nRows; i++)
         if (isNonDescendingSorted(m.values[i], m.nCols) == 0)
@@ -829,14 +849,14 @@ bool hasAllNonDescendingRows(matrix m) {
 int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
     int countNonDescendingRows = 0;
     for (int i = 0; i < nMatrix; i++) {
-        if (hasAllNonDescendingRows(ms[i]) == 1)
+        if (hasAllNonDescendingRows(ms[i]))
             countNonDescendingRows++;
     }
     return countNonDescendingRows;
 }
 
 void test_taskNumber13_countOfNonDescIs2() {
-    matrix *m = createArrayOfMatrixFromArray(
+    matrix *m1 = createArrayOfMatrixFromArray(
             (int[]) {
                     7, 1,
                     1, 1,
@@ -854,12 +874,14 @@ void test_taskNumber13_countOfNonDescIs2() {
             2, 2
     );
 
-    assert(countNonDescendingRowsMatrices(m, 4) == 2);
+    assert(countNonDescendingRowsMatrices(m1, 4) == 2);
+
+    freeMemMatrices(m1, 4);
 }
 
 
 void test_taskNumber13_countOfNonDescIs3() {
-    matrix *m = createArrayOfMatrixFromArray(
+    matrix *m1 = createArrayOfMatrixFromArray(
             (int[]) {
                     1, 1, 5,
                     1, 1, 8,
@@ -881,11 +903,13 @@ void test_taskNumber13_countOfNonDescIs3() {
             3, 3
     );
 
-    assert(countNonDescendingRowsMatrices(m, 4) == 3);
+    assert(countNonDescendingRowsMatrices(m1, 4) == 3);
+
+    freeMemMatrices(m1, 4);
 }
 
 void test_taskNumber13_countOfNonDescIs1() {
-    matrix *m = createArrayOfMatrixFromArray(
+    matrix *m1 = createArrayOfMatrixFromArray(
             (int[]) {
                     1, 1, 1,
                     1, 1, 1,
@@ -907,7 +931,9 @@ void test_taskNumber13_countOfNonDescIs1() {
             3, 3
     );
 
-    assert(countNonDescendingRowsMatrices(m, 4) == 1);
+    assert(countNonDescendingRowsMatrices(m1, 4) == 1);
+
+    freeMemMatrices(m1, 4);
 }
 
 void test_taskNumber13_theAreNoNonDescRowsMatrices() {
@@ -930,6 +956,87 @@ void test_taskNumber13_theAreNoNonDescRowsMatrices() {
     );
 
     assert(countNonDescendingRowsMatrices(m, 4) == 0);
+
+    freeMemMatrices(m, 4);
+}
+
+// Возвращает количество чисел массива a размера n,
+// значение которых равно values
+int countValues(const int *a, int n, int value) {
+    int countNumbersEqualToValues = 0;
+
+    for (int i = 0; i < n; i++)
+        if (a[i] == value)
+            countNumbersEqualToValues++;
+
+    return countNumbersEqualToValues;
+}
+
+// Возвращает количество рядов матрицы m,
+// в которых все числа равны нулю
+int countZeroRows(matrix m) {
+    int countZeroRowsInMatrix = 0;
+
+    for (int i = 0; i < m.nRows; i++)
+        if (countValues(m.values[i], m.nCols, 0) == m.nCols)
+            countZeroRowsInMatrix++;
+
+    return countZeroRowsInMatrix;
+}
+
+// Выводит матрицы ms, имеющие наибольшее число нулевых строк
+// изначальное количество матриц nMatrix
+void printMatrixWithMaxZeroRows(matrix *ms, int nMatrix) {
+    int *arrayIndexCountZeroRows = (int *) malloc(sizeof(int) * nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        arrayIndexCountZeroRows[i] = countZeroRows(ms[i]);
+
+    int maxInArray = getMax(arrayIndexCountZeroRows, nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        if (maxInArray == 0) {
+            printf("there are no matrices with zero rows");
+            break;
+        } else if (arrayIndexCountZeroRows[i] == maxInArray) {
+            outputMatrix(ms[i]);
+            printf("\n");
+        }
+
+    free(arrayIndexCountZeroRows);
+}
+
+void test_taskNumber14_functionCountZeroRows_3() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 1, 4,
+                    0, 0, 0,
+                    5, 4, 8,
+                    0, 0, 0,
+                    0, 6, 1,
+                    0, 0, 0
+            },
+            6, 3
+    );
+
+    assert(countZeroRows(m1) == 3);
+
+    freeMemMatrix(m1);
+}
+
+void test_taskNumber14_functionCountZeroRows_0() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 0, 0,
+                    0, 6, 1,
+                    0, 3, 0
+            },
+            3, 3
+    );
+
+    assert(countZeroRows(m1) == 0);
+
+    freeMemMatrix(m1);
 }
 
 void test_tasks_9_15() {
@@ -943,6 +1050,8 @@ void test_tasks_9_15() {
     test_taskNumber13_countOfNonDescIs3();
     test_taskNumber13_theAreNoNonDescRowsMatrices();
     test_taskNumber13_countOfNonDescIs1();
+    test_taskNumber14_functionCountZeroRows_3();
+    test_taskNumber14_functionCountZeroRows_0();
 }
 
 void test() {
@@ -954,6 +1063,34 @@ void test() {
 
 int main() {
     test();
+
+    matrix *m = createArrayOfMatrixFromArray(
+            (int[]) {
+                    0, 0,
+                    1, 0,
+                    1, 0,
+
+                    1, 1,
+                    2, 1,
+                    1, 1,
+
+                    1, 0,
+                    1, 0,
+                    4, 7,
+
+                    1, 0,
+                    0, 1,
+                    1, 0,
+
+                    0, 1,
+                    1, 2,
+                    0, 3
+            },
+            5,
+            3, 2
+    );
+
+    printMatrixWithMaxZeroRows(m, 5);
 
     return 0;
 }

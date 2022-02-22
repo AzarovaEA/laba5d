@@ -7,6 +7,7 @@
 #include <memory.h>
 #include <malloc.h>
 #include <stdlib.h>
+#include <limits.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
