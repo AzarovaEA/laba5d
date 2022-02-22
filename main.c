@@ -1039,6 +1039,49 @@ void test_taskNumber14_functionCountZeroRows_0() {
     freeMemMatrix(m1);
 }
 
+int getMinModuloValueInMatrix(matrix m) {
+    int minValue = abs(m.values[0][0]);
+
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; j++)
+            if (abs(m.values[i][j]) < minValue)
+                minValue = abs(m.values[i][j]);
+
+    return minValue;
+}
+
+void printMatrixWithMinModule(matrix *ms, int nMatrix) {
+    int *arrayIndexMinModule = (int *) malloc(sizeof(int) * nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        arrayIndexMinModule[i] = getMinModuloValueInMatrix(ms[i]);
+
+    int minInArray = getMin(arrayIndexMinModule, nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        if (arrayIndexMinModule[i] == minInArray) {
+            outputMatrix(ms[i]);
+            printf("\n");
+        }
+
+    free(arrayIndexMinModule);
+}
+
+void test_taskNumber15_function_getMinModuloValueInMatrix() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, -3, 3,
+                    30, -60, 10,
+                    80, -80, 5
+            },
+            3, 3
+    );
+
+    assert(getMinModuloValueInMatrix(m1) == 3);
+
+    freeMemMatrix(m1);
+}
+
 void test_tasks_9_15() {
     test_taskNumber10();
     test_taskNumber11();
@@ -1052,6 +1095,7 @@ void test_tasks_9_15() {
     test_taskNumber13_countOfNonDescIs1();
     test_taskNumber14_functionCountZeroRows_3();
     test_taskNumber14_functionCountZeroRows_0();
+    test_taskNumber15_function_getMinModuloValueInMatrix();
 }
 
 void test() {
@@ -1066,31 +1110,17 @@ int main() {
 
     matrix *m = createArrayOfMatrixFromArray(
             (int[]) {
-                    0, 0,
-                    1, 0,
-                    1, 0,
+                    7, -10,
+                    34, -3,
 
-                    1, 1,
-                    2, 1,
-                    1, 1,
-
-                    1, 0,
-                    1, 0,
-                    4, 7,
-
-                    1, 0,
-                    0, 1,
-                    1, 0,
-
-                    0, 1,
-                    1, 2,
-                    0, 3
+                    10, 60,
+                    -4, 3,
             },
-            5,
-            3, 2
+            2,
+            2, 2
     );
 
-    printMatrixWithMaxZeroRows(m, 5);
+    printMatrixWithMinModule(m, 2);
 
     return 0;
 }
