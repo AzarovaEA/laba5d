@@ -112,12 +112,6 @@ void swapUniversal(void *a, void *b, size_t size) {
     }
 }
 
-void swap(int *a, int *b) {
-    int t = *a;
-    *b = *a;
-    *a = t;
-}
-
 void insertionSortRowsMatrixByRowCriteria(matrix m,
                                           int (*criteria)(int *, int)) {
     int arrayRowsCriteria[m.nRows];
@@ -227,7 +221,7 @@ matrix createMatrixFromArray(const int *a, int nRows, int nCols) {
 }
 
 matrix *createArrayOfMatrixFromArray(const int *values,
-                                     size_t nMatrices, size_t nRows, size_t nCols) {
+                                     int nMatrices, int nRows, int nCols) {
     matrix *ms = getMemArrayOfMatrices(nMatrices, nRows, nCols);
 
     int l = 0;

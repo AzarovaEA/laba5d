@@ -8,6 +8,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 typedef struct matrix {
     int **values; // элементы матрицы
@@ -52,7 +53,7 @@ void outputMatrix(matrix m);
 void outputMatrices(matrix *ms, int nMatrices);
 
 // обмен строк с порядковыми
-//номерами i1 и i2 в матрице m
+// номерами i1 и i2 в матрице m
 void swapRows(matrix m, int i1, int i2);
 
 // обмен колонок с порядковыми
@@ -71,6 +72,9 @@ bool twoMatricesEqual(matrix m1, matrix m2);
 // возвращает значение ’истина’, если матрица
 // m является единичной, ложь – в противном случае
 bool isEMatrix(matrix m);
+
+// Обмен значений двух переменных по адресам a и b размера size
+void swapUniversal(void *a, void *b, size_t size);
 
 // выполняет сортировку вставками строк матрицы m
 // по неубыванию значения функции criteria
@@ -106,8 +110,7 @@ matrix createMatrixFromArray(const int *a, int nRows , int nCols);
 // из nMatrices матриц, размещенных в динамической памяти,
 // построенных из элементов массива a
 matrix *createArrayOfMatrixFromArray(const int *values,
-                                     size_t nMatrices,
-                                     size_t nRows, size_t nCols);
+                                     int nMatrices, int nRows, int nCols);
 
 // Возвращает минимальный элемент массива а, размера n
 int getMin(int *a, int n);
@@ -144,9 +147,6 @@ long long getSum(int *a, int n);
 // Транспонирует матрицу, если среди сумм элементов
 // строк матрицы m нет равных
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
-
-// возвращает максимальное из двух чисел a и b
-int max(int a, int b);
 
 // Возвращает сумму максимальных элементов
 // всех псевдодиагоналей матрицы m

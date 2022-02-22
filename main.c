@@ -181,6 +181,16 @@ void test_is_No_SymmetricMatrix() {
     freeMemMatrix(m1);
 }
 
+void test_predicate_FunctionsForMatrices() {
+    test_isSquareMatrix();
+    test_is_No_SquareMatrix();
+    test_isEMatrix();
+    test_is_No_EMatrix();
+    test_isSymmetricMatrix();
+    test_isSymmetricMatrix_NoSquareMatrix();
+    test_is_No_SymmetricMatrix();
+}
+
 void test_transposeSquareMatrix() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
@@ -312,16 +322,6 @@ void test_functionsForMatrices() {
     test_getMinValuePos_EqualToi0j0();
 }
 
-void test_predicate_FunctionsForMatrices() {
-    test_isSquareMatrix();
-    test_is_No_SquareMatrix();
-    test_isEMatrix();
-    test_is_No_EMatrix();
-    test_isSymmetricMatrix();
-    test_isSymmetricMatrix_NoSquareMatrix();
-    test_is_No_SymmetricMatrix();
-}
-
 void test_taskNumber1() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
@@ -446,6 +446,14 @@ void test_taskNumber4_two_NoSymmetric() {
     assert(isSymmetricMatrix(m1) == 0);
 
     freeMemMatrix(m1);
+}
+
+void test_tasks_1_4() {
+    test_taskNumber1();
+    test_taskNumber2();
+    test_taskNumber3();
+    test_taskNumber4_one();
+    test_taskNumber4_two_NoSymmetric();
 }
 
 void test_taskNumber5_one() {
@@ -601,12 +609,7 @@ void test_taskNumber8_MaxInTheFirstRow() {
     freeMemMatrix(m1);
 }
 
-void test_tasks_1_8() {
-    test_taskNumber1();
-    test_taskNumber2();
-    test_taskNumber3();
-    test_taskNumber4_one();
-    test_taskNumber4_two_NoSymmetric();
+void test_tasks_5_8() {
     test_taskNumber5_one();
     test_taskNumber5_two();
     test_taskNumber6();
@@ -615,6 +618,86 @@ void test_tasks_1_8() {
     test_taskNumber8_MaxInTheMiddle();
     test_taskNumber8_MaxOnTheLeftEdge();
     test_taskNumber8_MaxInTheFirstRow();
+}
+
+float getDistance(int *a, int n) {
+    float distance = 0;
+
+    for (int i = 0; i < n; i++)
+        distance += (float) (a[i] * a[i]);
+
+    return sqrtf(distance);
+}
+
+void insertionSortRowsMatrixByRowCriteriaF(matrix m,
+                                           float (*criteria)(int *, int)) {
+    float arrayRowsCriteria[m.nRows];
+    for (int i = 0; i < m.nRows; i++)
+        arrayRowsCriteria[i] = criteria(m.values[i], m.nCols);
+
+    for (int i = 1; i < m.nRows; i++) {
+        int j = i;
+        float a = arrayRowsCriteria[i];
+        while (j > 0 && arrayRowsCriteria[j - 1] > a) {
+            swapUniversal(&arrayRowsCriteria[j - 1], &arrayRowsCriteria[j], sizeof(float));
+            swapRows(m, j, j - 1);
+            j--;
+        }
+        arrayRowsCriteria[j] = a;
+    }
+}
+
+void sortByDistances(matrix m) {
+    insertionSortRowsMatrixByRowCriteriaF(m, getDistance);
+}
+
+void test_taskNumber9_one() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 6,
+                    4, 5, 2,
+                    1, 9, 0,
+                    3, 2, 1
+            },
+            4, 3);
+
+    sortByDistances(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 1,
+                    4, 5, 2,
+                    3, 5, 6,
+                    1, 9, 0
+            },
+            4, 3);
+
+    assert(twoMatricesEqual(m1, m2));
+}
+
+void test_taskNumber9_two() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 1,
+                    2, 7,
+                    5, 4,
+                    4, 3,
+            },
+            4, 2
+    );
+
+    sortByDistances(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    4, 3,
+                    5, 4,
+                    7, 1,
+                    2, 7
+            },
+            4, 2);
+
+    assert(twoMatricesEqual(m1, m2));
 }
 
 int cmp_long_long(const void *a, const void *b) {
@@ -628,7 +711,7 @@ int cmp_long_long(const void *a, const void *b) {
 }
 
 // Возвращает количество уникальных элементов
-// в матрице m, размера n
+// в массиве a, размера n
 int countNUnique(long long *a, int n) {
     qsort(a, n, sizeof(long long), cmp_long_long);
 
@@ -670,6 +753,40 @@ void test_taskNumber10() {
     freeMemMatrix(m1);
 }
 
+void test_taskNumber10_SumOfAllRowsIsDifferent() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 1, 3,
+                    2, 7, 4,
+                    5, 4, 9,
+                    4, 3, 0
+            },
+            4, 3
+    );
+
+    assert(countEqClassesByRowsSum(m1) == 4);
+
+    freeMemMatrix(m1);
+}
+
+void test_taskNumber10_SumOfAllRowsIsTheSame() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 1, 3,
+                    2, 8, 1,
+                    5, 4, 2,
+                    2, 9, 0
+            },
+            4, 3
+    );
+
+    assert(countEqClassesByRowsSum(m1) == 1);
+
+    freeMemMatrix(m1);
+}
+
+// Возвращает количество "особых" элементов матрицы m, считая элемент
+// "особым", если он больше суммы остальных элементов своего столбца
 int getNSpecialElement(matrix m) {
     int numberSpecial = 0;
     for (int j = 0; j < m.nCols; j++) {
@@ -700,6 +817,21 @@ void test_taskNumber11() {
     );
 
     assert(getNSpecialElement(m1) == 2);
+
+    freeMemMatrix(m1);
+}
+
+void test_taskNumber11_thereAreNoSpecialElements() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 6, 6,
+                    3, 2, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getNSpecialElement(m1) == 0);
 
     freeMemMatrix(m1);
 }
@@ -828,6 +960,20 @@ void test_taskNumber12_size2x2() {
     freeMemMatrix(m2);
 }
 
+void test_tasks_9_12() {
+    test_taskNumber9_one();
+    test_taskNumber9_two();
+    test_taskNumber10();
+    test_taskNumber10_SumOfAllRowsIsDifferent();
+    test_taskNumber10_SumOfAllRowsIsTheSame();
+    test_taskNumber11();
+    test_taskNumber11_thereAreNoSpecialElements();
+    test_taskNumber12_severalIdenticalMinimum();
+    test_taskNumber12_minInTheThirdColumn();
+    test_taskNumber12_minInTheLastColumn();
+    test_taskNumber12_size2x2();
+}
+
 // Возвращает 'истина', если массив a размера n отсортирован
 // по не убыванию, в обратном случае вернуть 'ложь'
 bool isNonDescendingSorted(const int *a, int n) {
@@ -846,6 +992,8 @@ bool hasAllNonDescendingRows(matrix m) {
     return true;
 }
 
+// Возвращает матрицы ms, изначальное количество матриц nMatrix,
+// имеющие наибольшее число нулевых строк
 int countNonDescendingRowsMatrices(matrix *ms, int nMatrix) {
     int countNonDescendingRows = 0;
     for (int i = 0; i < nMatrix; i++) {
@@ -1039,6 +1187,7 @@ void test_taskNumber14_functionCountZeroRows_0() {
     freeMemMatrix(m1);
 }
 
+// Возвращает минимальное по модулю значение матрицы m
 int getMinModuloValueInMatrix(matrix m) {
     int minValue = abs(m.values[0][0]);
 
@@ -1050,6 +1199,8 @@ int getMinModuloValueInMatrix(matrix m) {
     return minValue;
 }
 
+// Выводит матрицы ms с наименьшей нормой, изначальное количество матриц nMatrix.
+// В качестве нормы матрицы взять максимум абсолютных величин её элементов
 void printMatrixWithMinModule(matrix *ms, int nMatrix) {
     int *arrayIndexMinModule = (int *) malloc(sizeof(int) * nMatrix);
 
@@ -1082,13 +1233,23 @@ void test_taskNumber15_function_getMinModuloValueInMatrix() {
     freeMemMatrix(m1);
 }
 
-void test_tasks_9_15() {
-    test_taskNumber10();
-    test_taskNumber11();
-    test_taskNumber12_severalIdenticalMinimum();
-    test_taskNumber12_minInTheThirdColumn();
-    test_taskNumber12_minInTheLastColumn();
-    test_taskNumber12_size2x2();
+void test_taskNumber15_function_getMinModuloValueInMatrix_two() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    0, -80, -20,
+                    0, -60, 0,
+                    -80, 0, -20,
+                    -90, 2, 30
+            },
+            4, 3
+    );
+
+    assert(getMinModuloValueInMatrix(m1) == 0);
+
+    freeMemMatrix(m1);
+}
+
+void test_tasks_13_15() {
     test_taskNumber13_countOfNonDescIs2();
     test_taskNumber13_countOfNonDescIs3();
     test_taskNumber13_theAreNoNonDescRowsMatrices();
@@ -1096,31 +1257,24 @@ void test_tasks_9_15() {
     test_taskNumber14_functionCountZeroRows_3();
     test_taskNumber14_functionCountZeroRows_0();
     test_taskNumber15_function_getMinModuloValueInMatrix();
+    test_taskNumber15_function_getMinModuloValueInMatrix_two();
+}
+
+void test_allTasks() {
+    test_tasks_1_4();
+    test_tasks_5_8();
+    test_tasks_9_12();
+    test_tasks_13_15();
 }
 
 void test() {
     test_functionsForMatrices();
     test_predicate_FunctionsForMatrices();
-    test_tasks_1_8();
-    test_tasks_9_15();
+    test_allTasks();
 }
 
 int main() {
     test();
-
-    matrix *m = createArrayOfMatrixFromArray(
-            (int[]) {
-                    7, -10,
-                    34, -3,
-
-                    10, 60,
-                    -4, 3,
-            },
-            2,
-            2, 2
-    );
-
-    printMatrixWithMinModule(m, 2);
 
     return 0;
 }
